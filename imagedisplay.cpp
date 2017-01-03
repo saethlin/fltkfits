@@ -1,6 +1,7 @@
-#include "ImageDisplay.h"
+#include "imagedisplay.h"
 
-ImageDisplay::ImageDisplay(std::valarray<double>& image) : Fl_Box(0, 0, 1024, 1024) {
+
+ImageDisplay::ImageDisplay(CImg<double>& image) : Fl_Box(0, 0, 1024, 1024) {
     this -> image = image;
     bytesdata = new uchar[image.size()];
     white = image.max();

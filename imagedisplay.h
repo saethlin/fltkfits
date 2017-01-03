@@ -1,16 +1,18 @@
-//
-// Created by ben on 1/3/17.
-//
-
 #ifndef FLTKFITS_IMAGEDISPLAY_H
 #define FLTKFITS_IMAGEDISPLAY_H
 
 #include <valarray>
+#include <FL/Fl.H>
 #include <FL/Fl_Box.H>
+#include <FL/Fl_Window.H>
+#include <FL/fl_draw.H>
+
+#include "CImg.h"
+using namespace cimg_library;
 
 class ImageDisplay : public Fl_Box {
 public:
-    ImageDisplay(std::valarray<double>& image);
+    ImageDisplay(CImg<double>& image);
     void draw();
     void set_white(double white);
     void set_black(double black);
