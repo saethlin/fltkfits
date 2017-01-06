@@ -12,18 +12,24 @@ using namespace cimg_library;
 
 class ImageDisplay : public Fl_Box {
 public:
-    ImageDisplay(CImg<double>& image);
+    ImageDisplay(CImg<double>& image, int width, int height);
     void draw();
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
+    void set_zoom(double zoom);
     int handle(int event);
+    double get_white();
+    double get_black();
 
 private:
-    std::valarray<double> image;
-    uchar* bytesdata;
-    bool reclip;
+    CImg<double> image;
+    CImg<uchar> clipped;
+    CImg<uchar> cropped;
+    bool clip, move;
     double black, white;
+    int x, y, width, height;
+    int last_y, last_x;
 };
 
 
