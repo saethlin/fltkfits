@@ -1,7 +1,6 @@
 #ifndef FLTKFITS_IMAGEDISPLAY_H
 #define FLTKFITS_IMAGEDISPLAY_H
 
-#include <valarray>
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
@@ -10,9 +9,12 @@
 #include "CImg.h"
 using namespace cimg_library;
 
+#include "MiniMap.h"
+
 class ImageDisplay : public Fl_Box {
 public:
     ImageDisplay(CImg<double>& image, int width, int height);
+    void set_minimap(MiniMap* minimap);
     void draw();
     void set_white(double white);
     void set_black(double black);
@@ -30,6 +32,7 @@ private:
     double black, white;
     int x, y, width, height;
     int last_y, last_x;
+    MiniMap* minimap;
 };
 
 

@@ -12,6 +12,10 @@ using namespace cimg_library;
 
 #include "imagedisplay.h"
 
+#define NONE 0
+#define WHITE 1
+#define BLACK 2
+
 class HistogramDisplay : public Fl_Box {
 public:
     HistogramDisplay(CImg<double>& image, Fl_Window* window, ImageDisplay* display);
@@ -26,6 +30,8 @@ private:
     ImageDisplay* imagedisplay;
     int width;
     double black_slider, white_slider;
+    int black_pos, white_pos;
+    int clicked;
 };
 
 

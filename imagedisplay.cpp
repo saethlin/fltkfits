@@ -35,6 +35,7 @@ void ImageDisplay::draw() {
 void ImageDisplay::set_white(double white) {
     if (white != this->white) {
         this->white = white;
+        minimap -> set_white(white);
         clip = true;
         redraw();
     }
@@ -43,6 +44,7 @@ void ImageDisplay::set_white(double white) {
 void ImageDisplay::set_black(double black) {
     if (black != this->black) {
         this->black = black;
+        minimap -> set_black(black);
         clip = true;
         redraw();
     }
@@ -93,4 +95,8 @@ int ImageDisplay::handle(int event) {
     }
 
     return 0;
+}
+
+void ImageDisplay::set_minimap(MiniMap* minimap) {
+    this -> minimap = minimap;
 }

@@ -1,6 +1,7 @@
 #include "fltkfits.h"
 #include "imagedisplay.h"
 #include "histogramdisplay.h"
+#include "MiniMap.h"
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -30,6 +31,11 @@ fltkfits::fltkfits(char* filename) {
 
     HistogramDisplay histdisplay(image, &window, &imdisplay);
     window.add(&histdisplay);
+
+    MiniMap minimap(image, &window);
+    window.add(&minimap);
+
+    imdisplay.set_minimap(&minimap);
 
     window.show();
     Fl::run();

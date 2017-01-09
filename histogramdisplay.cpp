@@ -57,16 +57,18 @@ HistogramDisplay::HistogramDisplay(CImg<double>& image, Fl_Window* window, Image
             histogram(x, y) = 0;
         }
     }
+
+    clicked = 0;
 }
 
 void HistogramDisplay::draw() {
     if (window->w()-200 != scaled.width()) {
         scaled = histogram.get_resize(window->w()-200, 50, 1, 1, 1);
+        black_pos = black_slider * scaled.width()/histogram.width();
+        white_pos = white_slider * scaled.width()/histogram.width();
     }
-    fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), scaled.height()+1);
 
-    int black_pos = black_slider * scaled.width()/histogram.width();
-    int white_pos = white_slider * scaled.width()/histogram.width();
+    fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), scaled.height()+1);
 
     fl_color(255, 0, 0);
     fl_line(black_pos, window->h(), black_pos, window->h()-50);
@@ -74,5 +76,38 @@ void HistogramDisplay::draw() {
 }
 
 int HistogramDisplay::handle(int event) {
-    return 1;
+    if (event == FL_PUSH and Fl::event_button() == FL_LEFT_MOUSE) {
+        if (abs(Fl::event_x() - white_pos) < 4) {
+            clicked = WHITE;
+            return 1;
+        }
+        else if (abs(Fl::event_x() - black_pos) < 4) {
+            clicked = BLACK;
+            return 1;
+        }
+    }
+    else if (event == FL_DRAG) {
+        if (clicked == WHITE) {
+            white_pos = Fl::event_x();
+            redraw();
+        }
+        else if (clicked == BLACK) {
+            black_pos = Fl::event_x();
+            redraw();
+        }
+        return 1;
+    }
+    else if (event == FL_RELEASE) {
+        if (clicked == BLACK) {
+            black_slider = (double)black_pos * (double)histogram.width()/(double)scaled.width();
+            imagedisplay -> set_black(histogram_to_value[(int)black_slider]);
+        }
+        else if (clicked == WHITE) {
+            white_slider = (double)white_pos * (double)histogram.width()/(double)scaled.width();
+            imagedisplay -> set_white(histogram_to_value[(int)white_slider]);
+        }
+        clicked = NONE;
+        return 1;
+    }
+    return 0;
 }
