@@ -66,13 +66,28 @@ void HistogramDisplay::draw() {
         scaled = histogram.get_resize(window->w()-200, 50, 1, 1, 1);
         black_pos = black_slider * scaled.width()/histogram.width();
         white_pos = white_slider * scaled.width()/histogram.width();
+        new_black_pos = black_pos;
+        new_white_pos = white_pos;
+        fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), scaled.height()+1);
+        fl_color(255, 0, 0);
+        fl_line(black_pos, window->h(), black_pos, window->h() - 50);
+        fl_line(white_pos, window->h(), white_pos, window->h() - 50);
     }
-
-    fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), scaled.height()+1);
-
-    fl_color(255, 0, 0);
-    fl_line(black_pos, window->h(), black_pos, window->h()-50);
-    fl_line(white_pos, window->h(), white_pos, window->h()-50);
+    else {
+        fl_color(255, 0, 0);
+        if (new_black_pos != black_pos) {
+            auto column = scaled.get_column(black_pos);
+            fl_draw_image_mono(column.data(), black_pos, window->h()-50, 1, 50);
+            fl_line(new_black_pos, window->h(), new_black_pos, window->h() - 50);
+            black_pos = new_black_pos;
+        }
+        if (new_white_pos != white_pos) {
+            auto column = scaled.get_column(white_pos);
+            fl_draw_image_mono(column.data(), white_pos, window->h()-50, 1, 50);
+            fl_line(new_white_pos, window->h(), new_white_pos, window->h() - 50);
+            white_pos = new_white_pos;
+        }
+    }
 }
 
 int HistogramDisplay::handle(int event) {
@@ -88,11 +103,11 @@ int HistogramDisplay::handle(int event) {
     }
     else if (event == FL_DRAG) {
         if (clicked == WHITE) {
-            white_pos = Fl::event_x();
+            new_white_pos = Fl::event_x();
             redraw();
         }
         else if (clicked == BLACK) {
-            black_pos = Fl::event_x();
+            new_black_pos = Fl::event_x();
             redraw();
         }
         return 1;
@@ -110,4 +125,8 @@ int HistogramDisplay::handle(int event) {
         return 1;
     }
     return 0;
+}
+
+HistogramDisplay::~HistogramDisplay() {
+
 }

@@ -30,6 +30,11 @@ private:
     ImageDisplay* imagedisplay;
     double black_slider, white_slider;
     int black_pos, white_pos;
+    int new_black_pos, new_white_pos;
+public:
+    ~HistogramDisplay() override;
+
+private:
     int clicked;
 };
 

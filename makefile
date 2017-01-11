@@ -1,5 +1,5 @@
-CC=clang++
-CFLAGS=-std=c++11 -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall -pthread -march=native -flto -Ofast -funroll-loops
+CC=g++
+CFLAGS=-std=c++11 -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall -pthread -march=native
 
 fltkfits: fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o
 	$(CC) fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o -o fltkfits $(CFLAGS)
