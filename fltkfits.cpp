@@ -1,4 +1,3 @@
-#include "fltkfits.h"
 #include "imagedisplay.h"
 #include "histogramdisplay.h"
 #include "MiniMap.h"
@@ -21,22 +20,31 @@ CImg<double> readImage(const char* filename) {
 }
 
 
-fltkfits::fltkfits(char* filename) {
-    auto image = readImage("test.fits");
+class fltkfits {
+public:
+    fltkfits(const char *filename) {
+        auto image = readImage("test.fits");
 
-    Fl_Window window(800, 500);
+        Fl_Window window(800, 500);
 
-    ImageDisplay imdisplay(image, window.w()-200, window.h()-50);
-    window.add(&imdisplay);
+        ImageDisplay imdisplay(window.w() - 200, window.h() - 50);
+        imdisplay.set_image(image);
+        window.add(&imdisplay);
 
-    HistogramDisplay histdisplay(image, &window, &imdisplay);
-    window.add(&histdisplay);
+        HistogramDisplay histdisplay(image, &window, &imdisplay);
+        window.add(&histdisplay);
 
-    MiniMap minimap(image, &window);
-    window.add(&minimap);
+        //MiniMap minimap(image, &window);
+        //window.add(&minimap);
 
-    imdisplay.set_minimap(&minimap);
+        //imdisplay.set_minimap(&minimap);
 
-    window.show();
-    Fl::run();
+        window.show();
+        Fl::run();
+    }
+};
+
+
+int main() {
+    fltkfits app("test.fits");
 }

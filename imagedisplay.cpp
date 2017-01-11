@@ -1,10 +1,13 @@
 #include "imagedisplay.h"
 #include <iostream>
 
-ImageDisplay::ImageDisplay(CImg<double>& image, int width, int height) : Fl_Box(0, 0, width, height) {
-    this -> image = image;
+ImageDisplay::ImageDisplay(int width, int height) : Fl_Box(0, 0, width, height) {
     this -> width = width;
     this -> height = height;
+}
+
+void ImageDisplay::set_image(CImg<double>& image) {
+    this -> image = image;
     set_origin(0, 0);
 
     // Initialize with nice black and white clipping values
@@ -35,7 +38,7 @@ void ImageDisplay::draw() {
 void ImageDisplay::set_white(double white) {
     if (white != this->white) {
         this->white = white;
-        minimap -> set_white(white);
+        // minimap -> set_white(white);
         clip = true;
         redraw();
     }
@@ -44,7 +47,7 @@ void ImageDisplay::set_white(double white) {
 void ImageDisplay::set_black(double black) {
     if (black != this->black) {
         this->black = black;
-        minimap -> set_black(black);
+        // minimap -> set_black(black);
         clip = true;
         redraw();
     }

@@ -13,7 +13,8 @@ using namespace cimg_library;
 
 class ImageDisplay : public Fl_Box {
 public:
-    ImageDisplay(CImg<double>& image, int width, int height);
+    ImageDisplay(int width, int height);
+    void set_image(CImg<double>&);
     void set_minimap(MiniMap* minimap);
     void draw();
     void set_white(double white);

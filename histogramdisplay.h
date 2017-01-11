@@ -28,7 +28,6 @@ private:
     std::vector<double> histogram_to_value;
     Fl_Window* window;
     ImageDisplay* imagedisplay;
-    int width;
     double black_slider, white_slider;
     int black_pos, white_pos;
     int clicked;

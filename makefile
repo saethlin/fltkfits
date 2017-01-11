@@ -1,15 +1,15 @@
-main: main.cpp fltkfits.o imagedisplay.o histogramdisplay.o MiniMap.o
-	g++ main.cpp -o main fltkfits.o imagedisplay.o histogramdisplay.o MiniMap.o -std=c++11 -L/usr/local/lib -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall
+CC=clang++
+CFLAGS=-std=c++11 -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall -pthread -march=native -flto -Ofast -funroll-loops
 
-fltkfits.o: fltkfits.cpp fltkfits.h imagedisplay.o histogramdisplay.o
-	g++ fltkfits.cpp -c -std=c++11 -L/usr/local/lib -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall
+fltkfits: fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o
+	$(CC) fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o -o fltkfits $(CFLAGS)
 
 imagedisplay.o: imagedisplay.cpp imagedisplay.h
-	g++ imagedisplay.cpp -c -std=c++11 -L/usr/local/lib -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall
+	$(CC) imagedisplay.cpp -c $(CFLAGS)
 
 histogramdisplay.o: histogramdisplay.cpp histogramdisplay.h
-	g++ histogramdisplay.cpp -c -std=c++11 -L/usr/local/lib -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall
+	$(CC) histogramdisplay.cpp -c $(CFLAGS)
 
 MiniMap.o: MiniMap.cpp MiniMap.h
-	g++ MiniMap.cpp -c -std=c++11 -L/usr/local/lib -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall
+	$(CC) MiniMap.cpp -c $(CFLAGS)
 
