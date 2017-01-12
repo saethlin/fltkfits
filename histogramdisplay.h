@@ -19,8 +19,8 @@ using namespace cimg_library;
 class HistogramDisplay : public Fl_Box {
 public:
     HistogramDisplay(CImg<double>& image, Fl_Window* window, ImageDisplay* display);
-    void draw();
-    int handle(int event);
+    void draw() override;
+    int handle(int event) override;
 
 private:
     CImg<uchar> histogram;

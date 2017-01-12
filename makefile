@@ -1,8 +1,8 @@
-CC=g++
-CFLAGS=-std=c++11 -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -Wall -pthread -march=native
+CC=clang++
+CFLAGS=-std=c++11  -Wall -march=native
 
 fltkfits: fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o
-	$(CC) fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o -o fltkfits $(CFLAGS)
+	$(CC) fltkfits.cpp imagedisplay.o histogramdisplay.o MiniMap.o -o fltkfits -lcfitsio -lCCfits `fltk-config --cxxflags --ldflags` -pthread $(CFLAGS)
 
 imagedisplay.o: imagedisplay.cpp imagedisplay.h
 	$(CC) imagedisplay.cpp -c $(CFLAGS)

@@ -16,12 +16,12 @@ public:
     ImageDisplay(int width, int height);
     void set_image(CImg<double>&);
     void set_minimap(MiniMap* minimap);
-    void draw();
+    void draw() override;
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
     void set_zoom(double zoom);
-    int handle(int event);
+    int handle(int event) override;
     double get_white();
     double get_black();
 
