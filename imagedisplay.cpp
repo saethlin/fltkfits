@@ -21,18 +21,32 @@ void ImageDisplay::set_image(CImg<double>& image) {
 }
 
 void ImageDisplay::draw() {
+    auto old = cropped;
     if (clip) {
         clipped = (image.get_cut(black, white) - black).normalize(0, 255);
         move = true;
     }
 
     if (move) {
-        cropped = clipped.get_crop(x, y, x+width, y+width, 0);
+        cropped = clipped.get_crop(x, y, x + width, y + width, 0);
     }
 
     clip = false;
     move = false;
-    fl_draw_image_mono(cropped.data(), 0, 0, width+1, height+1);
+    if (cropped.size() == old.size()) {
+        for (auto x = 0; x < cropped.width(); x++) {
+            for (auto y = 0; y < cropped.height(); y++) {
+                if (old(x, y) != cropped(x, y)) {
+                    auto val = cropped(x, y);
+                    fl_color(val, val, val);
+                    fl_point(x, y);
+                }
+            }
+        }
+    }
+    else {
+        fl_draw_image_mono(cropped.data(), 0, 0, width+1, height+1);
+    }
 }
 
 void ImageDisplay::set_white(double white) {
