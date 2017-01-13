@@ -17,6 +17,14 @@ void ImageDisplay::set_image(CImg<double>& image) {
     set_black(*median);
 }
 
+void ImageDisplay::add(MiniMap* minimap) {
+    this -> minimap = minimap;
+    minimap->set_image(image);
+    minimap->set_white(white);
+    minimap->set_black(black);
+    minimap->set_origin(x, y);
+}
+
 
 typedef struct pixel{
     int x;
@@ -73,18 +81,22 @@ void ImageDisplay::draw() {
 void ImageDisplay::set_white(double white) {
     if (white != this->white) {
         this->white = white;
-        // minimap -> set_white(white);
         clip = true;
         redraw();
+        if (minimap != NULL) {
+            minimap->set_white(white);
+        }
     }
 }
 
 void ImageDisplay::set_black(double black) {
     if (black != this->black) {
         this->black = black;
-        // minimap -> set_black(black);
         clip = true;
         redraw();
+        if (minimap != NULL) {
+            minimap->set_black(black);
+        }
     }
 }
 

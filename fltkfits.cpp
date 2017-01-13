@@ -35,13 +35,12 @@ int main() {
     HistogramDisplay histdisplay(&window, &imdisplay);
     window.add(&histdisplay);
 
-    //MiniMap minimap(image, &window);
-    //window.add(&minimap);
-
-    //imdisplay.set_minimap(&minimap);
+    MiniMap minimap(&window);
+    window.add(&minimap);
 
     imdisplay.set_image(image);
     histdisplay.set_image(image);
+    imdisplay.add(&minimap);
 
     window.show();
     Fl::run();

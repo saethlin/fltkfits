@@ -21,6 +21,7 @@ public:
     void set_image(CImg<double>&);
     void set_minimap(MiniMap* minimap);
     void draw() override;
+    void add(MiniMap* minimap);
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
