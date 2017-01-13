@@ -1,4 +1,5 @@
 #include "imagedisplay.h"
+#include "MiniMap.h"
 
 ImageDisplay::ImageDisplay(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
 
@@ -15,7 +16,21 @@ void ImageDisplay::set_image(CImg<double>& image) {
     std::nth_element(sortable.begin(), white_level, sortable.end());
     set_white(*white_level);
     set_black(*median);
+
+    minimap->set_image(image);
+    minimap->set_white(white);
+    minimap->set_black(black);
+    minimap->set_origin(x, y);
+
+    histogramdisplay->set_image(image);
 }
+
+void ImageDisplay::add(HistogramDisplay* histogramdisplay) {
+    this->histogramdisplay = histogramdisplay;
+    histogramdisplay -> set_imagedisplay(this);
+    histogramdisplay -> set_image(image)
+}
+
 
 void ImageDisplay::add(MiniMap* minimap) {
     this -> minimap = minimap;
@@ -23,6 +38,10 @@ void ImageDisplay::add(MiniMap* minimap) {
     minimap->set_white(white);
     minimap->set_black(black);
     minimap->set_origin(x, y);
+}
+
+void ImageDisplay::add(DirList* dirlist) {
+    dirlist -> set_imagedisplay(this);
 }
 
 typedef struct pixel{
@@ -64,7 +83,7 @@ void ImageDisplay::draw() {
             }
         }
 
-        std::stable_sort(changed.begin(), changed.end(), acompare);
+        std::sort(changed.begin(), changed.end(), acompare);
 
         fl_color(changed[0].color, changed[0].color, changed[0].color);
         fl_point(changed[0].x, changed[0].y);

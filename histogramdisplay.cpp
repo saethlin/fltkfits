@@ -1,4 +1,5 @@
 #include "histogramdisplay.h"
+#include "imagedisplay.h"
 #include <iostream>
 
 

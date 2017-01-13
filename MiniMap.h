@@ -8,6 +8,8 @@
 #include "CImg.h"
 using namespace cimg_library;
 
+class ImageDisplay;
+
 class MiniMap : public Fl_Box {
 public:
     MiniMap(Fl_Window* window);
@@ -25,8 +27,10 @@ private:
     CImg<uchar> clipped;
     double black, white;
     int x, y;
-    Fl_Window* window;
     bool clip, move;
+
+    Fl_Window* window;
+    ImageDisplay* imagedisplay;
 };
 
 

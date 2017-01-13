@@ -13,7 +13,8 @@
 #include "CImg.h"
 using namespace cimg_library;
 
-#include "MiniMap.h"
+class HistogramDisplay;
+class MiniMap;
 
 class ImageDisplay : public Fl_Box {
 public:

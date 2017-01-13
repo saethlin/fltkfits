@@ -8,12 +8,13 @@
 #include <FL/fl_draw.H>
 
 #include "CImg.h"
-#include "imagedisplay.h"
 using namespace cimg_library;
 
 #define NONE 0
 #define WHITE 1
 #define BLACK 2
+
+class ImageDisplay;
 
 class HistogramDisplay : public Fl_Box {
 public:

@@ -25,17 +25,20 @@ int main(int argc, char* argv[]) {
     ImageDisplay imdisplay(&window);
     window.add(&imdisplay);
 
-    HistogramDisplay histdisplay(&window, &imdisplay);
-    window.add(&histdisplay);
+    HistogramDisplay histogram(&window);
+    window.add(&histogram);
+
+    DirList dirlist(&window);
+    window.add(dirlist);
 
     MiniMap minimap(&window);
     window.add(&minimap);
-    imdisplay.add(&minimap);
+    imagedisplay.add(&histogram);
+    imagedisplay.add(&dirlist)
 
     if (argc > 1) {
         auto image = readImage(argv[1]);
         imdisplay.set_image(image);
-        histdisplay.set_image(image);
     }
 
     window.show();
