@@ -25,7 +25,6 @@ void ImageDisplay::add(MiniMap* minimap) {
     minimap->set_origin(x, y);
 }
 
-
 typedef struct pixel{
     int x;
     int y;

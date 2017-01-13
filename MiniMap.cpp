@@ -6,6 +6,7 @@ MiniMap::MiniMap(Fl_Window* window) : Fl_Box(window->w()-200, 0, 200, 200){
 
 void MiniMap::set_image(CImg<double>& image) {
     this->image = image.get_resize(200, 200);
+    redraw();
 }
 
 void MiniMap::draw() {

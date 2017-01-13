@@ -16,17 +16,10 @@ CImg<double> readImage(const char* filename) {
     auto x = primary_HDU.axis(0);
     auto y = primary_HDU.axis(1);
 
-    return CImg<double>(&contents[0], x, y, 1, 1, false);
+    return CImg<double>(&contents[0], x, y);
 }
 
-// TODO: Determine if this is any better than the default implementation, it seems to
-void Fl_Window::draw() {
-    draw_children();
-}
-
-int main() {
-    auto image = readImage("test.fits");
-
+int main(int argc, char* argv[]) {
     Fl_Window window(800, 500);
 
     ImageDisplay imdisplay(&window);
@@ -37,10 +30,13 @@ int main() {
 
     MiniMap minimap(&window);
     window.add(&minimap);
-
-    imdisplay.set_image(image);
-    histdisplay.set_image(image);
     imdisplay.add(&minimap);
+
+    if (argc > 1) {
+        auto image = readImage(argv[1]);
+        imdisplay.set_image(image);
+        histdisplay.set_image(image);
+    }
 
     window.show();
     Fl::run();

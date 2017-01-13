@@ -1,6 +1,5 @@
 #include "histogramdisplay.h"
 #include <iostream>
-#include <math.h>
 
 
 HistogramDisplay::HistogramDisplay(Fl_Window* window, ImageDisplay* imagedisplay) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
@@ -76,7 +75,7 @@ void HistogramDisplay::draw() {
         white_pos = white_slider * scaled.width()/histogram.width();
         new_black_pos = black_pos;
         new_white_pos = white_pos;
-        fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), scaled.height()+1);
+        fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), 50);
         fl_color(255, 0, 0);
         fl_line(black_pos, window->h(), black_pos, window->h() - 50);
         fl_line(white_pos, window->h(), white_pos, window->h() - 50);
@@ -116,6 +115,7 @@ int HistogramDisplay::handle(int event) {
         }
         else if (clicked == BLACK) {
             new_black_pos = Fl::event_x();
+
             redraw();
         }
         return 1;
@@ -133,8 +133,4 @@ int HistogramDisplay::handle(int event) {
         return 1;
     }
     return 0;
-}
-
-HistogramDisplay::~HistogramDisplay() {
-
 }

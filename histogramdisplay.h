@@ -8,9 +8,8 @@
 #include <FL/fl_draw.H>
 
 #include "CImg.h"
-using namespace cimg_library;
-
 #include "imagedisplay.h"
+using namespace cimg_library;
 
 #define NONE 0
 #define WHITE 1
@@ -18,10 +17,11 @@ using namespace cimg_library;
 
 class HistogramDisplay : public Fl_Box {
 public:
-    HistogramDisplay(Fl_Window* window, ImageDisplay* display);
+    HistogramDisplay(Fl_Window* window, ImageDisplay* imagedisplay);
     void draw() override;
     int handle(int event) override;
     void set_image(CImg<double>& image);
+    //void set_imagedisplay(ImageDisplay* imagedisplay);
 
 private:
     CImg<uchar> histogram;
@@ -33,8 +33,6 @@ private:
     int black_pos, white_pos;
     int new_black_pos, new_white_pos;
     int clicked;
-public:
-    ~HistogramDisplay() override;
 };
 
 
