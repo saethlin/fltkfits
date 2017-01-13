@@ -3,10 +3,12 @@
 #include <math.h>
 
 
-HistogramDisplay::HistogramDisplay(CImg<double>& image, Fl_Window* window, ImageDisplay* imagedisplay) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
+HistogramDisplay::HistogramDisplay(Fl_Window* window, ImageDisplay* imagedisplay) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
     this->window = window;
     this->imagedisplay = imagedisplay;
+}
 
+void HistogramDisplay::set_image(CImg<double>& image) {
     std::vector<double> sortable(image.data(), image.data() + image.size());
     auto image_max = std::max_element(sortable.begin(), sortable.end());
 
@@ -58,11 +60,17 @@ HistogramDisplay::HistogramDisplay(CImg<double>& image, Fl_Window* window, Image
         }
     }
 
-    clicked = 0;
+    clicked = NONE;
+
+    redraw();
+
 }
 
 void HistogramDisplay::draw() {
-    if (window->w()-200 != scaled.width()) {
+    if (this->histogram.size() == 0) {
+        fl_draw_box(FL_FLAT_BOX, 0, this->parent()->h()-h(), w(), h(), fl_rgb_color(255));
+    }
+    else if (window->w()-200 != scaled.width()) {
         scaled = histogram.get_resize(window->w()-200, 50, 1, 1, 1);
         black_pos = black_slider * scaled.width()/histogram.width();
         white_pos = white_slider * scaled.width()/histogram.width();

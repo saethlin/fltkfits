@@ -1,10 +1,14 @@
 #ifndef FLTKFITS_IMAGEDISPLAY_H
 #define FLTKFITS_IMAGEDISPLAY_H
 
+#include<vector>
+#include<algorithm>
+
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
+#include <FL/x.H>
 
 #include "CImg.h"
 using namespace cimg_library;
@@ -13,7 +17,7 @@ using namespace cimg_library;
 
 class ImageDisplay : public Fl_Box {
 public:
-    ImageDisplay(int width, int height);
+    ImageDisplay(Fl_Window* window);
     void set_image(CImg<double>&);
     void set_minimap(MiniMap* minimap);
     void draw() override;
@@ -31,7 +35,7 @@ private:
     CImg<uchar> cropped;
     bool clip, move;
     double black, white;
-    int x, y, width, height;
+    int x, y;
     int last_y, last_x;
     MiniMap* minimap;
 };

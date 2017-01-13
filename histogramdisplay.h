@@ -18,9 +18,10 @@ using namespace cimg_library;
 
 class HistogramDisplay : public Fl_Box {
 public:
-    HistogramDisplay(CImg<double>& image, Fl_Window* window, ImageDisplay* display);
+    HistogramDisplay(Fl_Window* window, ImageDisplay* display);
     void draw() override;
     int handle(int event) override;
+    void set_image(CImg<double>& image);
 
 private:
     CImg<uchar> histogram;
@@ -31,11 +32,9 @@ private:
     double black_slider, white_slider;
     int black_pos, white_pos;
     int new_black_pos, new_white_pos;
+    int clicked;
 public:
     ~HistogramDisplay() override;
-
-private:
-    int clicked;
 };
 
 

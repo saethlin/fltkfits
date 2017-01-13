@@ -19,32 +19,30 @@ CImg<double> readImage(const char* filename) {
     return CImg<double>(&contents[0], x, y, 1, 1, false);
 }
 
-
-class fltkfits {
-public:
-    fltkfits(const char *filename) {
-        auto image = readImage("test.fits");
-
-        Fl_Window window(800, 500);
-
-        ImageDisplay imdisplay(window.w() - 200, window.h() - 50);
-        imdisplay.set_image(image);
-        window.add(&imdisplay);
-
-        HistogramDisplay histdisplay(image, &window, &imdisplay);
-        window.add(&histdisplay);
-
-        //MiniMap minimap(image, &window);
-        //window.add(&minimap);
-
-        //imdisplay.set_minimap(&minimap);
-
-        window.show();
-        Fl::run();
-    }
-};
-
+// TODO: Determine if this is any better than the default implementation, it seems to
+void Fl_Window::draw() {
+    draw_children();
+}
 
 int main() {
-    fltkfits app("test.fits");
+    auto image = readImage("test.fits");
+
+    Fl_Window window(800, 500);
+
+    ImageDisplay imdisplay(&window);
+    window.add(&imdisplay);
+
+    HistogramDisplay histdisplay(&window, &imdisplay);
+    window.add(&histdisplay);
+
+    //MiniMap minimap(image, &window);
+    //window.add(&minimap);
+
+    //imdisplay.set_minimap(&minimap);
+
+    imdisplay.set_image(image);
+    histdisplay.set_image(image);
+
+    window.show();
+    Fl::run();
 }

@@ -1,10 +1,7 @@
 #include "imagedisplay.h"
-#include <iostream>
 
-ImageDisplay::ImageDisplay(int width, int height) : Fl_Box(0, 0, width, height) {
-    this -> width = width;
-    this -> height = height;
-}
+ImageDisplay::ImageDisplay(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
+
 
 void ImageDisplay::set_image(CImg<double>& image) {
     this -> image = image;
@@ -20,32 +17,56 @@ void ImageDisplay::set_image(CImg<double>& image) {
     set_black(*median);
 }
 
+
+typedef struct pixel{
+    int x;
+    int y;
+    uchar color;
+} pixel;
+
+
+bool acompare(const pixel& lhs, const pixel& rhs) {
+    return lhs.color < rhs.color;
+}
+
+
 void ImageDisplay::draw() {
-    auto old = cropped;
-    if (clip) {
-        clipped = (image.get_cut(black, white) - black).normalize(0, 255);
-        move = true;
+    if (this->image.size() == 0) {
+        fl_draw_box(FL_FLAT_BOX, 0, 0, w(), h(), fl_rgb_color(0));
     }
+    else {
+        auto old = cropped;
+        if (clip) {
+            clipped = (image.get_cut(black, white) - black).normalize(0, 255);
+            move = true;
+        }
 
-    if (move) {
-        cropped = clipped.get_crop(x, y, x + width, y + width, 0);
-    }
+        if (move) {
+            cropped = clipped.get_crop(x, y, x + w(), y + h(), 0);
+        }
 
-    clip = false;
-    move = false;
-    if (cropped.size() == old.size()) {
-        for (auto x = 0; x < cropped.width(); x++) {
-            for (auto y = 0; y < cropped.height(); y++) {
-                if (old(x, y) != cropped(x, y)) {
-                    auto val = cropped(x, y);
-                    fl_color(val, val, val);
-                    fl_point(x, y);
+        clip = false;
+        move = false;
+
+        std::vector<pixel> changed;
+        for (auto y = 0; y < this->h(); y++) {
+            for (auto x = 0; x < this->w(); x++) {
+                if (x >= old.width() or y >= old.height() or old(x, y) != cropped(x, y)) {
+                    changed.push_back({x, y, cropped(x, y)});
                 }
             }
         }
-    }
-    else {
-        fl_draw_image_mono(cropped.data(), 0, 0, width+1, height+1);
+
+        std::stable_sort(changed.begin(), changed.end(), acompare);
+
+        fl_color(changed[0].color, changed[0].color, changed[0].color);
+        fl_point(changed[0].x, changed[0].y);
+        for (auto i = 1; i < changed.size(); i++) {
+            if (changed[i].color != changed[i - 1].color) {
+                fl_color(changed[i].color, changed[i].color, changed[i].color);
+            }
+            fl_point(changed[i].x, changed[i].y);
+        }
     }
 }
 
@@ -75,11 +96,10 @@ double ImageDisplay::get_black() {
     return black;
 }
 
-// TODO: Better variable names in here
 void ImageDisplay::set_origin(int x, int y) {
 
-    auto try_x = std::min(image.width()-width, std::max(x, 0));
-    auto try_y = std::min(image.height()-height, std::max(y, 0));
+    auto try_x = std::min(image.width() - this->w(), std::max(x, 0));
+    auto try_y = std::min(image.height() - this->h(), std::max(y, 0));
 
     if ((try_x != this->x) || (try_y != this->y)) {
         this -> x = try_x;
