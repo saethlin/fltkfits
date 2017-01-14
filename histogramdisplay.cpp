@@ -1,6 +1,5 @@
 #include "histogramdisplay.h"
 #include "imagedisplay.h"
-#include <iostream>
 
 
 HistogramDisplay::HistogramDisplay(Fl_Window* window) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
@@ -74,12 +73,14 @@ void HistogramDisplay::draw() {
         fl_draw_box(FL_FLAT_BOX, 0, this->parent()->h()-h(), w(), h(), fl_rgb_color(255));
     }
     else if (window->w()-200 != scaled.width()) {
+        auto old = scaled;
         scaled = histogram.get_resize(window->w()-200, 50, 1, 1, 1);
+        draw_changed(old, scaled, 0, window->h()-50, scaled.width(), 50);
+
         black_pos = black_slider * scaled.width()/histogram.width();
         white_pos = white_slider * scaled.width()/histogram.width();
         new_black_pos = black_pos;
         new_white_pos = white_pos;
-        fl_draw_image_mono(scaled.data(), 0, window->h()-50, scaled.width(), 50);
         fl_color(255, 0, 0);
         fl_line(black_pos, window->h(), black_pos, window->h() - 50);
         fl_line(white_pos, window->h(), white_pos, window->h() - 50);

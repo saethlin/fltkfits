@@ -2,6 +2,7 @@
 #include "histogramdisplay.h"
 #include "MiniMap.h"
 #include "DirList.h"
+#include "CursorDisplay.h"
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -35,12 +36,18 @@ int main(int argc, char* argv[]) {
     MiniMap minimap(&window);
     window.add(&minimap);
 
+    CursorDisplay cursor(&window);
+    window.add(&cursor);
+
     imdisplay.add(&histogram);
     imdisplay.add(&minimap);
     imdisplay.add(&dirlist);
+    imdisplay.add(&cursor);
 
-    if (argc > 1) {
-        auto image = readImage(argv[1]);
+    window.resizable(imdisplay);
+
+    if (true) {
+        auto image = readImage("test.fits");
         imdisplay.set_image(image);
     }
 

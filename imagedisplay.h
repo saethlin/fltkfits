@@ -1,8 +1,8 @@
 #ifndef FLTKFITS_IMAGEDISPLAY_H
 #define FLTKFITS_IMAGEDISPLAY_H
 
-#include<vector>
-#include<algorithm>
+#include <vector>
+#include <algorithm>
 
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
@@ -13,9 +13,12 @@
 #include "CImg.h"
 using namespace cimg_library;
 
+#include "draw_changed.h"
+
 class HistogramDisplay;
 class MiniMap;
 class DirList;
+class CursorDisplay;
 
 class ImageDisplay : public Fl_Box {
 public:
@@ -26,6 +29,7 @@ public:
     void add(MiniMap* minimap);
     void add(HistogramDisplay* histogramdisplay);
     void add(DirList* dirlist);
+    void add(CursorDisplay* cursordisplay);
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
@@ -38,12 +42,12 @@ private:
     CImg<double> image;
     CImg<uchar> clipped;
     CImg<uchar> cropped;
-    bool clip, move;
+    bool clip, move, draw_text;
     double black, white;
-    int x, y;
-    int last_y, last_x;
+    int x, y, cursor_x, cursor_y;
     MiniMap* minimap;
     HistogramDisplay* histogramdisplay;
+    CursorDisplay* cursordisplay;
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef FLTKFITS_MNIIMAP_H
 #define FLTKFITS_MNIIMAP_H
 
+#include <vector>
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/fl_draw.H>
@@ -8,11 +9,14 @@
 #include "CImg.h"
 using namespace cimg_library;
 
+#include "draw_changed.h"
+
 class ImageDisplay;
 
 class MiniMap : public Fl_Box {
 public:
     MiniMap(Fl_Window* window);
+    void set_imagedisplay(ImageDisplay* imagedisplay);
     void draw();
     void set_image(CImg<double>& image);
     void set_black(double black);
@@ -26,8 +30,10 @@ private:
     CImg<double> image;
     CImg<uchar> clipped;
     double black, white;
-    int x, y;
+    int x, y, last_x, last_y;
     bool clip, move;
+    int original_width, original_height;
+    std::vector<pixel> damaged_pixels;
 
     Fl_Window* window;
     ImageDisplay* imagedisplay;
