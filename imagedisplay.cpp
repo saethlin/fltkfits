@@ -1,7 +1,25 @@
 #include "imagedisplay.h"
+#include "histogramdisplay.h"
 #include "MiniMap.h"
+#include "DirList.h"
 
 ImageDisplay::ImageDisplay(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
+
+
+void ImageDisplay::add(HistogramDisplay* histogramdisplay) {
+    this->histogramdisplay = histogramdisplay;
+    histogramdisplay->set_imagedisplay(this);
+}
+
+
+void ImageDisplay::add(MiniMap* minimap) {
+    this -> minimap = minimap;
+}
+
+
+void ImageDisplay::add(DirList* dirlist) {
+    dirlist -> set_imagedisplay(this);
+}
 
 
 void ImageDisplay::set_image(CImg<double>& image) {
@@ -25,24 +43,6 @@ void ImageDisplay::set_image(CImg<double>& image) {
     histogramdisplay->set_image(image);
 }
 
-void ImageDisplay::add(HistogramDisplay* histogramdisplay) {
-    this->histogramdisplay = histogramdisplay;
-    histogramdisplay -> set_imagedisplay(this);
-    histogramdisplay -> set_image(image)
-}
-
-
-void ImageDisplay::add(MiniMap* minimap) {
-    this -> minimap = minimap;
-    minimap->set_image(image);
-    minimap->set_white(white);
-    minimap->set_black(black);
-    minimap->set_origin(x, y);
-}
-
-void ImageDisplay::add(DirList* dirlist) {
-    dirlist -> set_imagedisplay(this);
-}
 
 typedef struct pixel{
     int x;

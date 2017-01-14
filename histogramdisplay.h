@@ -18,11 +18,11 @@ class ImageDisplay;
 
 class HistogramDisplay : public Fl_Box {
 public:
-    HistogramDisplay(Fl_Window* window, ImageDisplay* imagedisplay);
+    HistogramDisplay(Fl_Window* window);
     void draw() override;
     int handle(int event) override;
     void set_image(CImg<double>& image);
-    //void set_imagedisplay(ImageDisplay* imagedisplay);
+    void set_imagedisplay(ImageDisplay* imagedisplay);
 
 private:
     CImg<uchar> histogram;

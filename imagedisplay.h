@@ -15,6 +15,7 @@ using namespace cimg_library;
 
 class HistogramDisplay;
 class MiniMap;
+class DirList;
 
 class ImageDisplay : public Fl_Box {
 public:
@@ -23,6 +24,8 @@ public:
     void set_minimap(MiniMap* minimap);
     void draw() override;
     void add(MiniMap* minimap);
+    void add(HistogramDisplay* histogramdisplay);
+    void add(DirList* dirlist);
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
@@ -40,6 +43,7 @@ private:
     int x, y;
     int last_y, last_x;
     MiniMap* minimap;
+    HistogramDisplay* histogramdisplay;
 };
 
 

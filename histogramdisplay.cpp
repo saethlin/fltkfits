@@ -3,9 +3,12 @@
 #include <iostream>
 
 
-HistogramDisplay::HistogramDisplay(Fl_Window* window, ImageDisplay* imagedisplay) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
+HistogramDisplay::HistogramDisplay(Fl_Window* window) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
     this->window = window;
-    this->imagedisplay = imagedisplay;
+}
+
+void HistogramDisplay::set_imagedisplay(ImageDisplay* imagedisplay) {
+    this -> imagedisplay = imagedisplay;
 }
 
 void HistogramDisplay::set_image(CImg<double>& image) {

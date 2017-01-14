@@ -1,6 +1,7 @@
 #include "imagedisplay.h"
 #include "histogramdisplay.h"
 #include "MiniMap.h"
+#include "DirList.h"
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -33,8 +34,10 @@ int main(int argc, char* argv[]) {
 
     MiniMap minimap(&window);
     window.add(&minimap);
-    imagedisplay.add(&histogram);
-    imagedisplay.add(&dirlist)
+
+    imdisplay.add(&histogram);
+    imdisplay.add(&minimap);
+    imdisplay.add(&dirlist);
 
     if (argc > 1) {
         auto image = readImage(argv[1]);
