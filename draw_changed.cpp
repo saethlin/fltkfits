@@ -15,7 +15,7 @@ void draw_changed(CImg<uchar>& old, CImg<uchar>& fresh, int x0, int y0, int widt
         }
     }
 
-    std::sort(changed.begin(), changed.end(), pixel_compare);
+    std::stable_sort(changed.begin(), changed.end(), pixel_compare);
 
     if (changed.size() != 0) {
         fl_color(changed[0].color, changed[0].color, changed[0].color);

@@ -42,7 +42,7 @@ private:
     CImg<double> image;
     CImg<uchar> clipped;
     CImg<uchar> cropped;
-    bool clip, move, draw_text;
+    bool clip, move;
     double black, white;
     int x, y, cursor_x, cursor_y;
     MiniMap* minimap;

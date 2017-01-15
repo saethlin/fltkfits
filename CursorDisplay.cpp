@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-CursorDisplay::CursorDisplay(Fl_Window *window) : Fl_Box(window->w()-200, 200, 200, 20) {}
+CursorDisplay::CursorDisplay(Fl_Window *window) : Fl_Box(window->w()-200, 200, 200, 40) {}
 
 
 void CursorDisplay::set_display(int x, int y, double value) {
@@ -15,11 +15,27 @@ void CursorDisplay::set_display(int x, int y, double value) {
 
 void CursorDisplay::draw() {
     const uchar black[] = {0};
+    const uchar white[] = {255};
+    auto my_font = CImgList<uchar>::font(53, true);
+
     auto old = image;
-    image = CImg<uchar>(w(), h(), 1, 1, 255);
+    image = CImg<uchar>(w()*53./20., h()*53./20., 1, 1, 255);
     std::stringstream ss;
-    ss << x << " " << y << " " << value;
-    image.draw_text(0, 0, ss.str().c_str(), black);
+
+    ss << "X: " << x;
+    image.draw_text(0, 0, ss.str().c_str(), black, white, 1.0, my_font);
+    ss.str("");
+    ss.clear();
+
+    ss << "Y: "<< y;
+    image.draw_text(image.width()/2, 0, ss.str().c_str(), black, white, 1.0, my_font);
+    ss.str("");
+    ss.clear();
+
+    ss << "Value: " << value+0.1;
+    image.draw_text(0, image.height()/2, ss.str().c_str(), black, white, 1.0, my_font);
+
+    image.resize(w(), h(), -100, -100, 5);
 
     if (old.size() == 0) {
         fl_draw_image_mono(image.data(), window()->w()-200, 200, image.width(), image.height());
