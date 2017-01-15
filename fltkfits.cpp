@@ -2,7 +2,9 @@
 #include "HistogramWidget.h"
 #include "MiniMap.h"
 #include "DirList.h"
-#include "CursorTrackerWidget.h"
+#include "CursorTracker.h"
+
+#include <FL/Fl_Double_Window.H>
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -22,7 +24,7 @@ CImg<double> readImage(const char* filename) {
 }
 
 int main(int argc, char* argv[]) {
-    Fl_Window window(800, 500);
+    Fl_Double_Window window(800, 500);
 
     ImageWidget imdisplay(&window);
     window.add(&imdisplay);
@@ -38,6 +40,7 @@ int main(int argc, char* argv[]) {
 
     CursorTrackerWidget cursor(&window);
     window.add(&cursor);
+    Fl::focus(&cursor);
 
     imdisplay.add(&histogram);
     imdisplay.add(&minimap);

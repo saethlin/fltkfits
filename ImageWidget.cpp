@@ -2,7 +2,7 @@
 #include "HistogramWidget.h"
 #include "MiniMap.h"
 #include "DirList.h"
-#include "CursorTrackerWidget.h"
+#include "CursorTracker.h"
 #include <iostream>
 
 ImageWidget::ImageWidget(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}

@@ -1,4 +1,4 @@
-#include "CursorTrackerWidget.h"
+#include "CursorTracker.h"
 #include <iostream>
 #include <sstream>
 
