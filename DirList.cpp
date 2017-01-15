@@ -4,6 +4,6 @@ DirList::DirList(Fl_Window* window) : Fl_Box(window->w()-200, 200, 200, window->
     this -> window = window;
 }
 
-void DirList::set_imagedisplay(ImageDisplay* imagedisplay) {
+void DirList::set_imagedisplay(ImageWidget* imagedisplay) {
     this -> imagedisplay = imagedisplay;
 }

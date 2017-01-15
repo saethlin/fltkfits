@@ -1,8 +1,8 @@
-#include "imagedisplay.h"
-#include "histogramdisplay.h"
+#include "ImageWidget.h"
+#include "HistogramWidget.h"
 #include "MiniMap.h"
 #include "DirList.h"
-#include "CursorDisplay.h"
+#include "CursorTrackerWidget.h"
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -24,10 +24,10 @@ CImg<double> readImage(const char* filename) {
 int main(int argc, char* argv[]) {
     Fl_Window window(800, 500);
 
-    ImageDisplay imdisplay(&window);
+    ImageWidget imdisplay(&window);
     window.add(&imdisplay);
 
-    HistogramDisplay histogram(&window);
+    HistogramWidget histogram(&window);
     window.add(&histogram);
 
     DirList dirlist(&window);
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     MiniMap minimap(&window);
     window.add(&minimap);
 
-    CursorDisplay cursor(&window);
+    CursorTrackerWidget cursor(&window);
     window.add(&cursor);
 
     imdisplay.add(&histogram);
@@ -46,8 +46,8 @@ int main(int argc, char* argv[]) {
 
     window.resizable(imdisplay);
 
-    if (true) {
-        auto image = readImage("test.fits");
+    if (argc > 1) {
+        auto image = readImage(argv[1]);
         imdisplay.set_image(image);
     }
 

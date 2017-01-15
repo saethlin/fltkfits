@@ -6,16 +6,16 @@
 #include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
 
-class ImageDisplay;
+class ImageWidget;
 
 class DirList : public Fl_Box {
 public:
     DirList(Fl_Window* window);
-    void set_imagedisplay(ImageDisplay* imagedisplay);
+    void set_imagedisplay(ImageWidget* imagedisplay);
 
 private:
     Fl_Window* window;
-    ImageDisplay* imagedisplay;
+    ImageWidget* imagedisplay;
 };
 
 

@@ -1,11 +1,11 @@
-#include "CursorDisplay.h"
+#include "CursorTrackerWidget.h"
 #include <iostream>
 #include <sstream>
 
-CursorDisplay::CursorDisplay(Fl_Window *window) : Fl_Box(window->w()-200, 200, 200, 40) {}
+CursorTrackerWidget::CursorTrackerWidget(Fl_Window *window) : Fl_Box(window->w()-200, 200, 200, 40) {}
 
 
-void CursorDisplay::set_display(int x, int y, double value) {
+void CursorTrackerWidget::set_display(int x, int y, double value) {
     this->x = x;
     this->y = y;
     this->value = value;
@@ -13,7 +13,7 @@ void CursorDisplay::set_display(int x, int y, double value) {
 }
 
 
-void CursorDisplay::draw() {
+void CursorTrackerWidget::draw() {
     const uchar black[] = {0};
     const uchar white[] = {255};
     auto my_font = CImgList<uchar>::font(53, true);
@@ -32,7 +32,7 @@ void CursorDisplay::draw() {
     ss.str("");
     ss.clear();
 
-    ss << "Value: " << value+0.1;
+    ss << "Value: " << value;
     image.draw_text(0, image.height()/2, ss.str().c_str(), black, white, 1.0, my_font);
 
     image.resize(w(), h(), -100, -100, 5);
@@ -45,6 +45,6 @@ void CursorDisplay::draw() {
     }
 }
 
-int CursorDisplay::handle(int event) {
+int CursorTrackerWidget::handle(int event) {
     return 0;
 }

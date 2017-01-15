@@ -11,12 +11,12 @@ using namespace cimg_library;
 
 #include "draw_changed.h"
 
-class ImageDisplay;
+class ImageWidget;
 
 class MiniMap : public Fl_Box {
 public:
     MiniMap(Fl_Window* window);
-    void set_imagedisplay(ImageDisplay* imagedisplay);
+    void set_imagedisplay(ImageWidget* imagedisplay);
     void draw();
     void set_image(CImg<double>& image);
     void set_black(double black);
@@ -36,7 +36,7 @@ private:
     std::vector<pixel> damaged_pixels;
 
     Fl_Window* window;
-    ImageDisplay* imagedisplay;
+    ImageWidget* imagedisplay;
 };
 
 

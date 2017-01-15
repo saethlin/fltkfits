@@ -1,16 +1,16 @@
-#include "histogramdisplay.h"
-#include "imagedisplay.h"
+#include "HistogramWidget.h"
+#include "ImageWidget.h"
 
 
-HistogramDisplay::HistogramDisplay(Fl_Window* window) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
+HistogramWidget::HistogramWidget(Fl_Window* window) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
     this->window = window;
 }
 
-void HistogramDisplay::set_imagedisplay(ImageDisplay* imagedisplay) {
+void HistogramWidget::set_imagedisplay(ImageWidget* imagedisplay) {
     this -> imagedisplay = imagedisplay;
 }
 
-void HistogramDisplay::set_image(CImg<double>& image) {
+void HistogramWidget::set_image(CImg<double>& image) {
     std::vector<double> sortable(image.data(), image.data() + image.size());
     auto image_max = std::max_element(sortable.begin(), sortable.end());
 
@@ -68,7 +68,7 @@ void HistogramDisplay::set_image(CImg<double>& image) {
 
 }
 
-void HistogramDisplay::draw() {
+void HistogramWidget::draw() {
     if (this->histogram.size() == 0) {
         fl_draw_box(FL_FLAT_BOX, 0, this->parent()->h()-h(), w(), h(), fl_rgb_color(255));
     }
@@ -102,7 +102,7 @@ void HistogramDisplay::draw() {
     }
 }
 
-int HistogramDisplay::handle(int event) {
+int HistogramWidget::handle(int event) {
     if (event == FL_PUSH and Fl::event_button() == FL_LEFT_MOUSE) {
         if (abs(Fl::event_x() - white_pos) < 4) {
             clicked = WHITE;

@@ -15,9 +15,9 @@ using namespace cimg_library;
 
 #include "draw_changed.h"
 
-class CursorDisplay : public Fl_Box {
+class CursorTrackerWidget : public Fl_Box {
 public:
-    CursorDisplay(Fl_Window* window);
+    CursorTrackerWidget(Fl_Window* window);
     void set_display(int x, int y, double value);
     void draw() override;
     int handle(int e) override;

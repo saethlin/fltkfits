@@ -1,35 +1,35 @@
-#include "imagedisplay.h"
-#include "histogramdisplay.h"
+#include "ImageWidget.h"
+#include "HistogramWidget.h"
 #include "MiniMap.h"
 #include "DirList.h"
-#include "CursorDisplay.h"
+#include "CursorTrackerWidget.h"
 #include <iostream>
 
-ImageDisplay::ImageDisplay(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
+ImageWidget::ImageWidget(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
 
 
-void ImageDisplay::add(HistogramDisplay* histogramdisplay) {
+void ImageWidget::add(HistogramWidget* histogramdisplay) {
     this->histogramdisplay = histogramdisplay;
     histogramdisplay->set_imagedisplay(this);
 }
 
 
-void ImageDisplay::add(MiniMap* minimap) {
+void ImageWidget::add(MiniMap* minimap) {
     this -> minimap = minimap;
     minimap -> set_imagedisplay(this);
 }
 
 
-void ImageDisplay::add(DirList* dirlist) {
+void ImageWidget::add(DirList* dirlist) {
     dirlist -> set_imagedisplay(this);
 }
 
-void ImageDisplay::add(CursorDisplay* cursordisplay) {
+void ImageWidget::add(CursorTrackerWidget* cursordisplay) {
     this->cursordisplay = cursordisplay;
 }
 
 
-void ImageDisplay::set_image(CImg<double>& image) {
+void ImageWidget::set_image(CImg<double>& image) {
     this -> image = image;
     set_origin(0, 0);
 
@@ -51,7 +51,7 @@ void ImageDisplay::set_image(CImg<double>& image) {
 }
 
 
-void ImageDisplay::draw() {
+void ImageWidget::draw() {
     if (this->image.size() == 0) {
         fl_draw_box(FL_FLAT_BOX, 0, 0, w(), h(), fl_rgb_color(0));
     }
@@ -76,7 +76,7 @@ void ImageDisplay::draw() {
     }
 }
 
-void ImageDisplay::set_white(double white) {
+void ImageWidget::set_white(double white) {
     if (white != this->white) {
         this->white = white;
         clip = true;
@@ -87,7 +87,7 @@ void ImageDisplay::set_white(double white) {
     }
 }
 
-void ImageDisplay::set_black(double black) {
+void ImageWidget::set_black(double black) {
     if (black != this->black) {
         this->black = black;
         clip = true;
@@ -98,15 +98,15 @@ void ImageDisplay::set_black(double black) {
     }
 }
 
-double ImageDisplay::get_white() {
+double ImageWidget::get_white() {
     return white;
 }
 
-double ImageDisplay::get_black() {
+double ImageWidget::get_black() {
     return black;
 }
 
-void ImageDisplay::set_origin(int x, int y) {
+void ImageWidget::set_origin(int x, int y) {
 
     auto try_x = std::min(image.width() - this->w(), std::max(x, 0));
     auto try_y = std::min(image.height() - this->h(), std::max(y, 0));
@@ -120,20 +120,22 @@ void ImageDisplay::set_origin(int x, int y) {
 
 }
 
-void ImageDisplay::set_zoom(double zoom) {
+void ImageWidget::set_zoom(double zoom) {
     //get_resize_halfXY()
     //get_resize_doubleXY()
     //get_resize()
 }
 
-int ImageDisplay::handle(int event) {
+int ImageWidget::handle(int event) {
     if (event == FL_FOCUS || event == FL_ENTER || event == FL_PUSH) {
         return 1;
     }
     else if (event == FL_MOVE) {
         cursor_x = Fl::event_x() + x;
         cursor_y = Fl::event_y() + y;
-        cursordisplay->set_display(cursor_x, cursor_y, image(cursor_x, cursor_y));
+        if (cursor_x < image.width() and cursor_y < image.height()) {
+            cursordisplay->set_display(cursor_x, cursor_y, image(cursor_x, cursor_y));
+        }
         return 1;
     }
 
@@ -141,6 +143,6 @@ int ImageDisplay::handle(int event) {
 }
 
 
-void ImageDisplay::set_minimap(MiniMap* minimap) {
+void ImageWidget::set_minimap(MiniMap* minimap) {
     this -> minimap = minimap;
 }

@@ -14,22 +14,22 @@ using namespace cimg_library;
 #define WHITE 1
 #define BLACK 2
 
-class ImageDisplay;
+class ImageWidget;
 
-class HistogramDisplay : public Fl_Box {
+class HistogramWidget : public Fl_Box {
 public:
-    HistogramDisplay(Fl_Window* window);
+    HistogramWidget(Fl_Window* window);
     void draw() override;
     int handle(int event) override;
     void set_image(CImg<double>& image);
-    void set_imagedisplay(ImageDisplay* imagedisplay);
+    void set_imagedisplay(ImageWidget* imagedisplay);
 
 private:
     CImg<uchar> histogram;
     CImg<uchar> scaled;
     std::vector<double> histogram_to_value;
     Fl_Window* window;
-    ImageDisplay* imagedisplay;
+    ImageWidget* imagedisplay;
     double black_slider, white_slider;
     int black_pos, white_pos;
     int new_black_pos, new_white_pos;

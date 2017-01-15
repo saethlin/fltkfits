@@ -1,12 +1,12 @@
 #include "MiniMap.h"
-#include "imagedisplay.h"
+#include "ImageWidget.h"
 #include <iostream>
 
 MiniMap::MiniMap(Fl_Window* window) : Fl_Box(window->w()-200, 0, 200, 200){
     this->window = window;
 }
 
-void MiniMap::set_imagedisplay(ImageDisplay* imagedisplay) {
+void MiniMap::set_imagedisplay(ImageWidget* imagedisplay) {
     this -> imagedisplay = imagedisplay;
 }
 

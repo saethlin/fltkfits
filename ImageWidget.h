@@ -15,21 +15,21 @@ using namespace cimg_library;
 
 #include "draw_changed.h"
 
-class HistogramDisplay;
+class HistogramWidget;
 class MiniMap;
 class DirList;
-class CursorDisplay;
+class CursorTrackerWidget;
 
-class ImageDisplay : public Fl_Box {
+class ImageWidget : public Fl_Box {
 public:
-    ImageDisplay(Fl_Window* window);
+    ImageWidget(Fl_Window* window);
     void set_image(CImg<double>&);
     void set_minimap(MiniMap* minimap);
     void draw() override;
     void add(MiniMap* minimap);
-    void add(HistogramDisplay* histogramdisplay);
+    void add(HistogramWidget* histogramdisplay);
     void add(DirList* dirlist);
-    void add(CursorDisplay* cursordisplay);
+    void add(CursorTrackerWidget* cursordisplay);
     void set_white(double white);
     void set_black(double black);
     void set_origin(int x, int  y);
@@ -46,8 +46,8 @@ private:
     double black, white;
     int x, y, cursor_x, cursor_y;
     MiniMap* minimap;
-    HistogramDisplay* histogramdisplay;
-    CursorDisplay* cursordisplay;
+    HistogramWidget* histogramdisplay;
+    CursorTrackerWidget* cursordisplay;
 };
 
 
