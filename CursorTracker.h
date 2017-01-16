@@ -20,7 +20,8 @@ public:
     CursorTracker(Fl_Window* window);
     void set_display(int x, int y, double value);
     void draw() override;
-    int handle(int e) override;
+    void resize(int x, int y, int w, int h) override;
+
 private:
     CImg<uchar> image;
     int x = 0;

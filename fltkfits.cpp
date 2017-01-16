@@ -3,8 +3,7 @@
 #include "MiniMap.h"
 #include "DirList.h"
 #include "CursorTracker.h"
-
-#include <FL/Fl_Double_Window.H>
+#include "RWindow.h"
 
 #include <CCfits/CCfits>
 using namespace CCfits;
@@ -24,7 +23,7 @@ CImg<double> readImage(const char* filename) {
 }
 
 int main(int argc, char* argv[]) {
-    Fl_Double_Window window(800, 500);
+    RWindow window(800, 500);
 
     ImageWidget imdisplay(&window);
     window.add(&imdisplay);
@@ -51,6 +50,7 @@ int main(int argc, char* argv[]) {
 
     if (argc > 1) {
         auto image = readImage(argv[1]);
+        window.size_range(0, 0, image.width()+200, image.height()+50);
         imdisplay.set_image(image);
     }
 

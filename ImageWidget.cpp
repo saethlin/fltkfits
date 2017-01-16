@@ -4,6 +4,7 @@
 #include "DirList.h"
 #include "CursorTracker.h"
 
+
 ImageWidget::ImageWidget(Fl_Window* window) : Fl_Widget(0, 0, window->w()-200, window->h()-50) {}
 
 
@@ -14,13 +15,13 @@ void ImageWidget::add(HistogramWidget* histogramdisplay) {
 
 
 void ImageWidget::add(MiniMap* minimap) {
-    this -> minimap = minimap;
-    minimap -> set_imagedisplay(this);
+    this->minimap = minimap;
+    minimap->set_imagedisplay(this);
 }
 
 
 void ImageWidget::add(DirList* dirlist) {
-    dirlist -> set_imagedisplay(this);
+    dirlist->set_imagedisplay(this);
 }
 
 void ImageWidget::add(CursorTracker* cursordisplay) {
@@ -29,7 +30,7 @@ void ImageWidget::add(CursorTracker* cursordisplay) {
 
 
 void ImageWidget::set_image(CImg<double>& image) {
-    this -> image = image;
+    this->image = image;
     set_origin(0, 0);
 
     // Initialize with nice black and white clipping values
@@ -51,29 +52,32 @@ void ImageWidget::set_image(CImg<double>& image) {
 
 
 void ImageWidget::draw() {
-    if (this->image.size() == 0) {
+    if (image.size() == 0) {
         fl_draw_box(FL_FLAT_BOX, 0, 0, w(), h(), fl_rgb_color(0));
     }
-    else {
-        if (clip or move) {
-            auto old = cropped;
+    else if (clip or move or changed()) {
+        auto old = cropped;
 
-            if (clip) {
-                clipped = (image.get_cut(black, white) - black).normalize(0, 255);
-                move = true;
-            }
+        if (clip) {
+            clipped = (image.get_cut(black, white) - black).normalize(0, 255);
+            move = true;
+        }
 
-            if (move) {
-                cropped = clipped.get_crop(x, y, x + w(), y + h(), 0);
-            }
-
-            draw_changed(old, cropped, 0, 0, this->w(), this->h());
-
-            clip = false;
-            move = false;
+        if (move or changed()) {
+            cropped = clipped.get_crop(x, y, x+w(), y+h());
+        }
+        clip = false;
+        move = false;
+        if (changed()) {
+            fl_draw_image_mono(cropped.data(), 0, 0, w()+1, h());
+            clear_changed();
+        }
+        else {
+            draw_changed(old, cropped, 0, 0, w(), h());
         }
     }
 }
+
 
 void ImageWidget::set_white(double white) {
     if (white != this->white) {
@@ -107,12 +111,12 @@ double ImageWidget::get_black() {
 
 void ImageWidget::set_origin(int x, int y) {
 
-    auto try_x = std::min(image.width() - this->w(), std::max(x, 0));
-    auto try_y = std::min(image.height() - this->h(), std::max(y, 0));
+    auto try_x = std::min(image.width() - w(), std::max(x, 0));
+    auto try_y = std::min(image.height() - h(), std::max(y, 0));
 
     if ((try_x != this->x) || (try_y != this->y)) {
-        this -> x = try_x;
-        this -> y = try_y;
+        this->x = try_x;
+        this->y = try_y;
         move = true;
         redraw();
     }

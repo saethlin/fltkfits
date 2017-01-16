@@ -26,6 +26,7 @@ public:
     void set_origin(int x, int y);
     void set_zoom(double zoom);
     int handle(int event);
+
 private:
     CImg<double> image;
     CImg<uchar> clipped;
@@ -34,8 +35,6 @@ private:
     bool clip, move;
     int original_width, original_height;
     std::vector<pixel> damaged_pixels;
-
-    Fl_Window* window;
     ImageWidget* imagedisplay;
 };
 

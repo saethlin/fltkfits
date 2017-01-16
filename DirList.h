@@ -13,6 +13,7 @@ public:
     DirList(Fl_Window* window);
     void set_imagedisplay(ImageWidget* imagedisplay);
     int handle(int event) override;
+    void draw() override;
 private:
     ImageWidget* imagedisplay;
 };

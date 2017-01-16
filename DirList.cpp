@@ -8,6 +8,12 @@ DirList::DirList(Fl_Window* window) : Fl_File_Browser(window->w()-200, 240, 200,
 }
 
 
+void DirList::draw() {
+    resize(window()->w()-200, 240, w(), window()->h()-240);
+    Fl_File_Browser::draw();
+}
+
+
 void DirList::set_imagedisplay(ImageWidget* imagedisplay) {
     this -> imagedisplay = imagedisplay;
 }

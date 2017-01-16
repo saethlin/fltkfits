@@ -1,8 +1,12 @@
 #include "CursorTracker.h"
-#include <iostream>
 #include <sstream>
 
 CursorTracker::CursorTracker(Fl_Window* window) : Fl_Widget(window->w()-200, 200, 200, 40) {}
+
+
+void CursorTracker::resize(int x, int y, int w, int h) {
+    Fl_Widget::resize(x, Fl_Widget::y(), this->w(), this->h());
+}
 
 
 void CursorTracker::set_display(int x, int y, double value) {
@@ -37,14 +41,11 @@ void CursorTracker::draw() {
 
     image.resize(w(), h(), -100, -100, 5);
 
-    if (old.size() == 0) {
+    if (old.size() == 0 or changed()) {
         fl_draw_image_mono(image.data(), window()->w()-200, 200, image.width(), image.height());
+        clear_changed();
     }
     else {
         draw_changed(old, image, window()->w()-200, 200, image.width()-1, image.height()-1);
     }
-}
-
-int CursorTracker::handle(int event) {
-    return 0;
 }
