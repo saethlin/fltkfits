@@ -3,7 +3,7 @@
 
 
 #include <FL/Fl.H>
-#include <FL/Fl_Box.H>
+#include <FL/Fl_Widget.H>
 #include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
 
@@ -16,7 +16,7 @@ using namespace cimg_library;
 
 class ImageWidget;
 
-class HistogramWidget : public Fl_Box {
+class HistogramWidget : public Fl_Widget {
 public:
     HistogramWidget(Fl_Window* window);
     void draw() override;

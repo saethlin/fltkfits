@@ -2,7 +2,7 @@
 #include "ImageWidget.h"
 
 
-HistogramWidget::HistogramWidget(Fl_Window* window) : Fl_Box(0, window->h()-50, window->w()-200, 50) {
+HistogramWidget::HistogramWidget(Fl_Window* window) : Fl_Widget(0, window->h()-50, window->w()-200, 50) {
     this->window = window;
 }
 

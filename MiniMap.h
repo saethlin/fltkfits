@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <FL/Fl.H>
-#include <FL/Fl_Box.H>
+#include <FL/Fl_Widget.H>
 #include <FL/fl_draw.H>
 
 #include "CImg.h"
@@ -13,7 +13,7 @@ using namespace cimg_library;
 
 class ImageWidget;
 
-class MiniMap : public Fl_Box {
+class MiniMap : public Fl_Widget {
 public:
     MiniMap(Fl_Window* window);
     void set_imagedisplay(ImageWidget* imagedisplay);

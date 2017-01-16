@@ -2,10 +2,10 @@
 #include <iostream>
 #include <sstream>
 
-CursorTrackerWidget::CursorTrackerWidget(Fl_Window *window) : Fl_Box(window->w()-200, 200, 200, 40) {}
+CursorTracker::CursorTracker(Fl_Window* window) : Fl_Widget(window->w()-200, 200, 200, 40) {}
 
 
-void CursorTrackerWidget::set_display(int x, int y, double value) {
+void CursorTracker::set_display(int x, int y, double value) {
     this->x = x;
     this->y = y;
     this->value = value;
@@ -13,7 +13,7 @@ void CursorTrackerWidget::set_display(int x, int y, double value) {
 }
 
 
-void CursorTrackerWidget::draw() {
+void CursorTracker::draw() {
     const uchar black[] = {0};
     const uchar white[] = {255};
     auto my_font = CImgList<uchar>::font(53, true);
@@ -45,6 +45,6 @@ void CursorTrackerWidget::draw() {
     }
 }
 
-int CursorTrackerWidget::handle(int event) {
+int CursorTracker::handle(int event) {
     return 0;
 }

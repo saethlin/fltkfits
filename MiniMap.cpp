@@ -2,7 +2,7 @@
 #include "ImageWidget.h"
 #include <iostream>
 
-MiniMap::MiniMap(Fl_Window* window) : Fl_Box(window->w()-200, 0, 200, 200){
+MiniMap::MiniMap(Fl_Window* window) : Fl_Widget(window->w()-200, 0, 200, 200){
     this->window = window;
 }
 

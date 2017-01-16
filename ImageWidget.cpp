@@ -3,9 +3,8 @@
 #include "MiniMap.h"
 #include "DirList.h"
 #include "CursorTracker.h"
-#include <iostream>
 
-ImageWidget::ImageWidget(Fl_Window* window) : Fl_Box(0, 0, window->w()-200, window->h()-50) {}
+ImageWidget::ImageWidget(Fl_Window* window) : Fl_Widget(0, 0, window->w()-200, window->h()-50) {}
 
 
 void ImageWidget::add(HistogramWidget* histogramdisplay) {
@@ -24,7 +23,7 @@ void ImageWidget::add(DirList* dirlist) {
     dirlist -> set_imagedisplay(this);
 }
 
-void ImageWidget::add(CursorTrackerWidget* cursordisplay) {
+void ImageWidget::add(CursorTracker* cursordisplay) {
     this->cursordisplay = cursordisplay;
 }
 

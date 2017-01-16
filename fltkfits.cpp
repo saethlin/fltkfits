@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     MiniMap minimap(&window);
     window.add(&minimap);
 
-    CursorTrackerWidget cursor(&window);
+    CursorTracker cursor(&window);
     window.add(&cursor);
     Fl::focus(&cursor);
 
