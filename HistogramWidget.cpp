@@ -115,13 +115,16 @@ int HistogramWidget::handle(int event) {
     }
     else if (event == FL_DRAG) {
         if (clicked == WHITE) {
-            new_white_pos = Fl::event_x();
-            redraw();
+            if (Fl::event_x() > black_pos and Fl::event_x() < w()) {
+                new_white_pos = Fl::event_x();
+                redraw();
+            }
         }
         else if (clicked == BLACK) {
-            new_black_pos = Fl::event_x();
-
-            redraw();
+            if (Fl::event_x() < white_pos and Fl::event_x() > 0) {
+                new_black_pos = Fl::event_x();
+                redraw();
+            }
         }
         return 1;
     }

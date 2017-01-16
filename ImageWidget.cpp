@@ -140,8 +140,3 @@ int ImageWidget::handle(int event) {
 
     return 0;
 }
-
-
-void ImageWidget::set_minimap(MiniMap* minimap) {
-    this -> minimap = minimap;
-}

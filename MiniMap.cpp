@@ -46,10 +46,10 @@ void MiniMap::draw() {
             }
         }
 
-        int x0 = round(600. + (double)x*200/original_width);
-        int y0 = round((double)y * 200/original_height);
-        int x1 = round(x0 + (600.0 * 200/original_width));
-        int y1 = round(y0 + (450.0 * 200/original_height));
+        int x0 = floor(600. + (double)x*200/original_width);
+        int y0 = floor((double)y * 200/original_height);
+        int x1 = floor(x0 + (600.0 * 200/original_width));
+        int y1 = floor(y0 + (450.0 * 200/original_height));
 
         fl_color(fl_rgb_color(255, 0, 0));
         fl_rect(x0, y0, x1-x0+1, y1-y0+1);
